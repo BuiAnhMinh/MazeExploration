@@ -18,10 +18,17 @@ class KruskalMazeGenerator():
     Kruskal's algorithm maze generator.  
     TODO: Complete the implementation (Task A)
     """
-	
+    def __init__(self, vertices):
+        self.vertices = vertices
+        self.edges = []
+    
+    def addEdge(self, u , v , weight):
+        self.graph.append([u, v, weight])
+    
+    
+        
+    
 
     def generateMaze(self, maze:Maze):
         # TODO: Implement this method for task A.
         pass
-
-        
