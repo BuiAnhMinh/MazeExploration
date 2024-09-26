@@ -8,5 +8,5 @@
     "solver": "recur",
     "solverEntranceIndex": 0,
     "visualise": true,
-    "fileOutput": "sampleTaskA-1.png"
+    "fileOutput": "images/recurGenerator5x5.png"
 }

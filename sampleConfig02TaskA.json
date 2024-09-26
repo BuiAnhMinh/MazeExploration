@@ -4,9 +4,9 @@
     "weight": "checkered",
     "entrances": [[0,-1], [-1, 5]],
     "exits": [[9,-1]],
-    "generator": "recur",
+    "generator": "kruskal",
     "solver": "recur",
     "solverEntranceIndex": 1,
     "visualise": true,
-    "fileOutput": "sampleTaskA-2.png"
+    "fileOutput": "images/sampleTaskA-2.png"
 }

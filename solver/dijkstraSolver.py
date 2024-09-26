@@ -9,6 +9,9 @@
 from maze.util import Coordinates
 from maze.maze import Maze
 
+class Edge():
+    
+    pass
 
 class DijkstraSolver():
 

@@ -53,7 +53,7 @@ class DisjointSet:
 
 class KruskalMazeGenerator:
     """
-    Kruskal's algorithm maze generator with weighted edges.
+    Kruskal's algorithm maze generator with weighted edges, excluding outer walls from the edge list.
     """
     
     def generateMaze(self, maze: Maze):
@@ -64,13 +64,14 @@ class KruskalMazeGenerator:
         # Map cell coordinates to an index for the DisjointSet (since it uses integers)
         cell_index = {cell: idx for idx, cell in enumerate(cells)}
         
-        # Add all the walls (edges) between neighboring cells
+        # Add walls (edges) between neighboring cells, but skip outer wall edges
         for cell in cells:
             neighbors = maze.neighbours(cell)
             for neighbor in neighbors:
                 if maze.hasEdge(cell, neighbor):  # Ensure an edge exists
-                    weight = maze.edgeWeight(cell, neighbor)  # Get edge weight
-                    graph.addEdge(cell, neighbor, weight)
+                    if not self.isOuterWall(cell, neighbor, maze):  # Skip outer walls
+                        weight = maze.edgeWeight(cell, neighbor)  # Get edge weight
+                        graph.addEdge(cell, neighbor, weight)
 
         # Initialize disjoint sets for all cells
         disjoint_set = DisjointSet(num_cells)
@@ -88,43 +89,20 @@ class KruskalMazeGenerator:
             if disjoint_set.find(u_idx) != disjoint_set.find(v_idx):
                 maze.removeWall(u, v)  # Remove the wall between u and v
                 disjoint_set.union(u_idx, v_idx)  # Merge the sets
-                
-        # Add outer walls except the entrance and exit
-        self.addOuterWalls(maze)
 
         return maze
     
-    def addOuterWalls(self, maze: Maze):
-        """Adds outer walls to the maze except for the entrance and exit."""
-        width = maze.colNum()
-        height = maze.rowNum()
+    def isOuterWall(self, u: Coordinates, v: Coordinates, maze: Maze) -> bool:
+        """
+        Checks if the edge between two cells u and v is part of the outer wall.
+        The outer walls are those that are on the boundaries of the maze.
+        """
+        width = maze.colNum()  # Number of columns in the maze
+        height = maze.rowNum()  # Number of rows in the maze
 
-        # Add walls to the top and bottom rows
-        for x in range(width):
-            top_cell = Coordinates(0, x)
-            bottom_cell = Coordinates(height - 1, x)
-            top_outer = Coordinates(-1, x)
-            bottom_outer = Coordinates(height, x)
-
-            # Add wall between outer top and top row, if not the entrance
-            if top_outer not in maze.getEntrances() and top_outer not in maze.getExits():
-                maze.addWall(top_outer, top_cell)
-
-            # Add wall between bottom row and outer bottom, if not the exit
-            if bottom_outer not in maze.getEntrances() and bottom_outer not in maze.getExits():
-                maze.addWall(bottom_cell, bottom_outer)
-
-        # Add walls to the left and right columns
-        for y in range(height):
-            left_cell = Coordinates(y, 0)
-            right_cell = Coordinates(y, width - 1)
-            left_outer = Coordinates(y, -1)
-            right_outer = Coordinates(y, width)
-
-            # Add wall between outer left and leftmost column, if not the entrance
-            if left_outer not in maze.getEntrances() and left_outer not in maze.getExits():
-                maze.addWall(left_outer, left_cell)
-
-            # Add wall between rightmost column and outer right, if not the exit
-            if right_outer not in maze.getEntrances() and right_outer not in maze.getExits():
-                maze.addWall(right_cell, right_outer)
+        # u or v should only be considered on the outer wall if it is not connected to a valid cell inside the maze
+        if (u.getRow() == -1 or u.getRow() == height or v.getRow() == -1 or v.getRow() == height) or \
+        (u.getCol() == -1 or u.getCol() == width or v.getCol() == -1 or v.getCol() == width):
+            return True  # This means it's on the outermost boundary (invalid)
+        
+        return False  # Otherwise, it is an inner wall that should be considered for removal
