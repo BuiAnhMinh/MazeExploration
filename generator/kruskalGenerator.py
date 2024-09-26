@@ -2,7 +2,7 @@
 # PLEASE UPDATE THIS FILE.
 # Kruskal's maze generator.
 #
-# __author__ = <Your name>
+# __author__ = Anh Minh Bui
 # __copyright__ = 'Copyright 2024, RMIT University'
 # -------------------------------------------------------------------
 
