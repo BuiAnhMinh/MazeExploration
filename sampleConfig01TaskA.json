@@ -8,5 +8,5 @@
     "solver": "dijkstra",
     "solverEntranceIndex": 0,
     "visualise": true,
-    "fileOutput": "sampleTaskA-1.png"
+    "fileOutput": "images/sampleTaskA-1.png"
 }

@@ -11,6 +11,7 @@ from maze.maze import Maze
 from maze.util import Coordinates
 import random
 
+# reference : https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
 class Edge:
     """
     Represents an edge in the graph, consisting of two vertices and a weight.

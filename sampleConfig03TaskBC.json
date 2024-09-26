@@ -8,5 +8,5 @@
     "solver": "recur",
     "strategy": "brute-force",
     "visualise": true,
-    "fileOutput": "testTaskB.png"
+    "fileOutput": "images/testTaskB.png"
 }

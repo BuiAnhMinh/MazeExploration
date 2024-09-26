@@ -11,6 +11,7 @@ from typing import List
 from maze.util import Coordinates
 from maze.maze import Maze
 
+# reference : https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
 
 class DijkstraSolver:
 
